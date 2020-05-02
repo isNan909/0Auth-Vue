@@ -12,19 +12,23 @@
       </div>
       <div v-else>
         <small>You are logged In</small>
-        <button>LogOut</button>
+        <button @click="logOut()">LogOut</button>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { login, isLogged } from '../utils/auth';
+import { login, isLogged, logUserOut } from '../utils/auth';
 export default {
   name: 'Home',
   components: {},
   methods: {
     loginClick() {
       login();
+    },
+    logOut() {
+      this.isLogged = false;
+      logUserOut();
     }
   },
   data: () => {

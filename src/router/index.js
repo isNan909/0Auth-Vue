@@ -5,7 +5,19 @@ import Private from '../views/Private.vue';
 import NotAuthorized from '../views/NotAuthorized.vue';
 import Callback from '../views/Callback.vue';
 
+import { isLogged } from '../utils/auth';
+
 Vue.use(VueRouter);
+
+function authCheck(to, from, next) {
+  if (!isLogged()) {
+    next({
+      path: '/notauthorized'
+    });
+  } else {
+    next();
+  }
+}
 
 const routes = [
   {
@@ -25,6 +37,7 @@ const routes = [
   {
     path: '/private',
     name: 'Private',
+    beforeEnter: authCheck,
     component: Private
   },
   {

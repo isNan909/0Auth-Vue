@@ -31,4 +31,8 @@ const login = () => {
   webAuth.authorize();
 };
 
-export { login, handleAuth, isLogged };
+const logUserOut = () => {
+  token = {};
+};
+
+export { login, handleAuth, isLogged, logUserOut };
