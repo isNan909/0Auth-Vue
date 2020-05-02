@@ -8,8 +8,27 @@ const webAuth = new auth0.WebAuth({
   scope: 'openid profile'
 });
 
+let token = {};
+
+const handleAuth = cb => {
+  webAuth.parseHash((error, authResult) => {
+    if (authResult && authResult.accessToken && authResult.idToken) {
+      token.accessToken = authResult.accessToken;
+      token.idToken = authResult.idToken;
+      token.expiry = new Date().getTime() + authResult.expiresIn * 1000;
+      cb();
+    } else {
+      console.log(error);
+    }
+  });
+};
+
+const isLogged = () => {
+  return token.accessToken && new Date().getTime() < token.expiry;
+};
+
 const login = () => {
   webAuth.authorize();
 };
 
-export { login };
+export { login, handleAuth, isLogged };

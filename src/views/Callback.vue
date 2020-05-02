@@ -4,8 +4,18 @@
   </div>
 </template>
 <script>
+import { handleAuth } from '../utils/auth';
 export default {
   name: 'Callback',
-  components: {}
+  beforeMount() {
+    handleAuth(error => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      console.log('logged in');
+      this.$router.push('/private');
+    });
+  }
 };
 </script>
